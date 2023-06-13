@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ quotes.symbol }}
+{% endblock %}
+
+{% block main %}
+    <h1 class="fw-bold display-1">{{ quotes.name }} <span class="badge bg-danger">{{ quotes.symbol }}</span></h1>
+    <p class="text-primary display-1 my-5">{{ quotes.price | usd }}</p>
+    <form action="/quote" method="get">
+        <button class="btn btn-primary" type="submit">Quote another</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portofolio
+{% endblock %}
+
+{% block main %}
+    {% if quotes %}
+    <div class="container-fluid fs-5 mx-auto px-0 px-lg-5 table-responsive">
+        <table class="table align-middle table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-start">Symbol</th>
+                    <th scope="col" class="text-start">Name</th>
+                    <th scope="col" class="text-end">Shares</th>
+                    <th scope="col" class="text-end">Average Value</th>
+                    <th scope="col" class="text-end">Total Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in quotes %}
+                <tr>
+                    <td class="text-start">{{stock.symbol}}</td>
+                    <td class="text-start">{{stock.name}}</td>
+                    <td class="text-end">{{stock.shares}}</td>
+                    <td class="text-end">{{stock.price | usd}}</td>
+                    <td class="text-end">{{stock.total | usd}}</td>
+                    <td class="d-grid">
+                        <form action="/buy" method="get">
+                            <input name="symbol" type="hidden" value="{{stock.symbol}}">
+                            <input class="btn btn-primary" type="submit" value="Buy">
+                        </form>
+                    </td>
+                    <td class="d-grid">
+                        <form action="/sell" method="get">
+                            <input name="symbol" type="hidden" value="{{stock.symbol}}">
+                            <input class="btn btn-primary" type="submit" value="Sell">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row" class="text-end" colspan="4">Cash</td>
+                    <td class="text-end">{{cash | usd}}</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-end" colspan="4">TOTAL</td>
+                    <td class="text-end">{{total_portofolio | usd}}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    {% else %}
+    <h1 class="display-1 mb-5">You don't have any stocks yet</h1>
+    <form action="/buy">
+        <button class="btn btn-primary btn-lg" type="submit">Buy Now!</button>
+    </form>
+    {% endif %}
+{% endblock %}

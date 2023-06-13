@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    {% if history %}
+    <div class="container-fluid fs-4 mx-auto px-0 px-lg-5 table-responsive">
+        <table class="table align-middle table-striped table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-start">Transaction</th>
+                    <th scope="col" class="text-start">Symbol</th>
+                    <th scope="col" class="text-end">Shares</th>
+                    <th scope="col" class="text-end">Price</th>
+                    <th scope="col" class="text-end">Date and Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in history %}
+                <tr>
+                    <td class="text-start">{{stock.transaction_type}}</td>
+                    <td class="text-start">{{stock.stock_symbol}}</td>
+                    <td class="text-end">{{stock.shares_number}}</td>
+                    <td class="text-end">{{stock.price | usd}}</td>
+                    <td class="text-end">{{stock.transaction_datetime}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <h1 class="display-1 mb-5">You haven't done any transactions yet</h1>
+    <form action="/buy">
+        <button class="btn btn-primary btn-lg" type="submit">Buy Now!</button>
+    </form>
+    {% endif %}
+{% endblock %}
